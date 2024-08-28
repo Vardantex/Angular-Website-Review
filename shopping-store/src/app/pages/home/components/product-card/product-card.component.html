@@ -2,7 +2,8 @@
 <div class="wrapper">
   <img [src]="product.thumbUrl" [alt]="product.name" class="image" />
   <div class="price">${{ product.price }}</div>
-  <div class="name">${{ product.name }}</div>
+  <!-- Apply the trunacate pipe for long text -->
+  <div class="name">${{ product.name | truncate }}</div>
   <button class="button link" (click)="onAdd()"><span>+</span>Add</button>
 </div>
 }
