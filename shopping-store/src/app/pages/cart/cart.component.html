@@ -13,7 +13,7 @@
         }}</strong>
       </div>
       <div class="arrival">
-        <strong>Arrives by Wed, Jan 24</strong>
+        <strong>Favorites</strong>
       </div>
       <div class="content">
         @for (item of items(); track item.id) {
@@ -26,8 +26,8 @@
         }
       </div>
     </div>
-    <aside class="shadow total">
-      <button class="checkout">
+    <!-- <aside class="shadow total">
+      <button class="checkout" (click)="onCheckout()">
         <strong>Continue to Checkout</strong>
       </button>
       <div class="subtotal value-pair">
@@ -48,7 +48,7 @@
           <strong>${{ total() }}</strong>
         </div>
       </div>
-    </aside>
+    </aside> -->
   </main>
   } @else {
   <div class="cart-empty">Cart is Empty!</div>

@@ -3,7 +3,8 @@
   <img [src]="product.thumbUrl" [alt]="product.name" class="image" />
   <div class="price">${{ product.price }}</div>
   <!-- Apply the trunacate pipe for long text -->
-  <div class="name">${{ product.name | truncate }}</div>
-  <button class="button link" (click)="onAdd()"><span>+</span>Add</button>
+  <div class="name">{{ product.name | truncate }}</div>
+  <button class="button link" (click)="onAdd()">Favorite</button>
+  <a [href]="product.link" target="_blank" class="button link">PLAY</a>
 </div>
 }

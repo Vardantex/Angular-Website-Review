@@ -1,6 +1,9 @@
 import { Component, computed } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { CartItemCardComponent } from './components/cart-item-card/cart-item-card.component';
+import { HttpClient } from '@angular/common/http';
+import { loadStripe } from '@stripe/stripe-js';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-cart',
@@ -18,7 +21,7 @@ export class CartComponent {
 
 
 // Create a constrctor with a private variable
-constructor(private cartService: CartService) {
+constructor(private cartService: CartService, private http: HttpClient) {
 
 }
 
@@ -38,7 +41,36 @@ onRemoveItem(id: string) {
   this.cartService.removeItem(item!);
 }
 
+async onCheckout() {
+  const stripe = await loadStripe(environment.STRIPE_PK);
+  const body = this.cartService.cart().items;
+  const headers = {
+    'Content-Type': 'application/json'
+  }
 
+  this.http.post('http://localhost:8000/api/create-checkout-session', body, {
+    headers: headers
+  })
+.subscribe({
+  next: async (response) => {
+const session = response as any; 
+
+const result = await stripe?.redirectToCheckout({
+  sessionId: session.id
+});
+
+  if(result?.error) {
+    console.log(result?.error);
+  }
+  },
+  error: (response) => {
+    if(response?.error) {
+      console.log(response?.error);
+      
+    }
+  }
+})
+}
 
 
 }
